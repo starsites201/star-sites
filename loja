@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Loja do Matheus</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #222; color: #fff; padding: 20px; text-align: center; }
+    .carrinho { position: absolute; top: 20px; right: 20px; background: #444; color: #fff; padding: 10px; border-radius: 5px; }
+    .produtos { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+    .produto { background: #fff; border: 1px solid #ddd; margin: 10px; padding: 15px; width: 250px; text-align: center; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .produto img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
+    .produto h3 { margin: 10px 0 5px; }
+    .produto p { margin: 5px 0; }
+    .produto button { background: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
+    .produto button:hover { background: #218838; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Loja do Matheus</h1>
+  <div class="carrinho">Carrinho: <span id="contador">0</span> itens</div>
+</header>
+
+<main class="produtos">
+  <div class="produto">
+    <img src="https://via.placeholder.com/250x200.png?text=Produto+1" alt="Produto 1">
+    <h3>Fone de Ouvido</h3>
+    <p>R$ 79,90</p>
+    <button onclick="adicionarCarrinho()">Comprar</button>
+  </div>
+
+  <div class="produto">
+    <img src="https://via.placeholder.com/250x200.png?text=Produto+2" alt="Produto 2">
+    <h3>Teclado Gamer</h3>
+    <p>R$ 129,90</p>
+    <button onclick="adicionarCarrinho()">Comprar</button>
+  </div>
+
+  <div class="produto">
+    <img src="https://via.placeholder.com/250x200.png?text=Produto+3" alt="Produto 3">
+    <h3>Mouse Sem Fio</h3>
+    <p>R$ 59,90</p>
+    <button onclick="adicionarCarrinho()">Comprar</button>
+  </div>
+</main>
+
+<script>
+  let contador = 0;
+  function adicionarCarrinho() {
+    contador++;
+    document.getElementById('contador').textContent = contador;
+  }
+</script>
+
+</body>
+</html>
+
