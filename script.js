@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const products = [
     {
-      name: "Site",
+      name: "Site Personalizado - Sem Domínio Personalizado",
       price: 10.0,
-      description: "Um site profissional feito sob medida para você.",
+      description: "Um Site De Vendas Personalizado Para Você.",
       image: "site.jpg", // coloque uma imagem com esse nome na pasta
       pixCode:
         "00020126580014BR.GOV.BCB.PIX013692907f20-f786-4997-bc3f-e62c3bd2503d520400005303986540510.005802BR5924Matheus Henrique Lima da6009SAO PAULO62140510gKM8FmdVTT63043E72",
