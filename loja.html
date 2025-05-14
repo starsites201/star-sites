@@ -1,88 +1,23 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Star Sites</title>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-  <script>
-    (function() {
-      emailjs.init("3MFJViYnflypKjMy6");
-    })();
-  </script>
+  <title>Produtos - StarSites</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
-    h1 { text-align: center; }
-    .produto, .carrinho { background: #fff; padding: 20px; margin: 20px auto; width: 90%; max-width: 400px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
-    button { padding: 10px; background: #6200ea; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #3700b3; }
-    .carrinho { display: none; }
-    .formulario { display: none; margin-top: 20px; }
-    input { display: block; width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-    .pix { background: #e0ffe0; padding: 10px; border-radius: 5px; margin-top: 10px; font-weight: bold; }
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    .product { background: white; padding: 15px; margin-bottom: 15px; border: 1px solid #ccc; }
+    a { text-decoration: none; color: white; background: #28a745; padding: 8px 12px; border-radius: 4px; }
   </style>
 </head>
 <body>
-  <h1>Star Sites</h1>  <div class="produto">
+  <h1>Produtos disponíveis</h1>
+
+  <div class="product">
     <h2>Site</h2>
-    <p>R$ 10,00</p>
-    <button onclick="adicionarCarrinho('Site')">Adicionar ao Carrinho</button>
-  </div>  <div class="carrinho" id="carrinho">
-    <h3>Seu Carrinho:</h3>
-    <ul id="itens"></ul>
-    <button onclick="mostrarFormulario()">Fazer Pagamento</button>
-  </div>  <div class="formulario" id="formulario">
-    <h3>Informe seus dados:</h3>
-    <input type="text" id="nome" placeholder="Nome completo">
-    <input type="email" id="email" placeholder="Seu e-mail">
-    <div class="pix">Pague via PIX: <br><strong>92907f20-f786-4997-bc3f-e62c3bd2503d</strong></div>
-    <button onclick="enviarEmail()">Enviar Confirmação</button>
-  </div>  <script>
-    let carrinho = [];
+    <p>Criação de site simples e funcional.</p>
+    <p><strong>R$ 10,00</strong></p>
+    <a href="index.html">Comprar</a>
+  </div>
 
-    function adicionarCarrinho(produto) {
-      carrinho.push(produto);
-      document.getElementById("carrinho").style.display = "block";
-      atualizarCarrinho();
-    }
-
-    function atualizarCarrinho() {
-      let lista = document.getElementById("itens");
-      lista.innerHTML = "";
-      carrinho.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = item;
-        lista.appendChild(li);
-      });
-    }
-
-    function mostrarFormulario() {
-      document.getElementById("formulario").style.display = "block";
-    }
-
-    function enviarEmail() {
-      const nome = document.getElementById("nome").value;
-      const email = document.getElementById("email").value;
-      const produto = carrinho.join(", ");
-
-      if (!nome || !email || carrinho.length === 0) {
-        alert("Preencha todos os dados e adicione ao menos 1 item ao carrinho.");
-        return;
-      }
-
-      const params = {
-        to_name: nome,
-        reply_to: email,
-        produto: produto
-      };
-
-      emailjs.send("service_gg8ckzf", "template_1zzk0wb", params)
-        .then(() => {
-          alert("E-mail enviado com sucesso! Vá para o WhatsApp para receber seu produto.");
-          window.location.href = "https://wa.me/qr/KG2236PVQ74MI1";
-        })
-        .catch((err) => {
-          console.error("Erro ao enviar:", err);
-          alert("Erro ao enviar e-mail. Tente novamente.");
-        });
-    }
-  </script></body>
+</body>
 </html>
