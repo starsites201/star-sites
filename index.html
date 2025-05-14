@@ -1,83 +1,98 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StarSites Store</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f9f9f9; }
-    h1 { color: #333; }
-    .product, .cart, #pixSection { background: #fff; padding: 15px; margin: 15px 0; border: 1px solid #ccc; }
-    button { padding: 10px 15px; background: #28a745; color: #fff; border: none; cursor: pointer; }
-    input, textarea { width: 100%; margin-top: 10px; padding: 8px; }
-    #pixSection { display: none; background: #e0ffe0; border: 1px dashed green; }
-    #pixKey { font-weight: bold; color: green; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Star Sites</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #f4f4f4; }
+        header { background-color: #222; color: white; padding: 30px 0; }
+        .btn { padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .produto { border: 1px solid #ccc; margin: 20px auto; max-width: 300px; background: white; padding: 20px; border-radius: 10px; }
+        .produto img { max-width: 100%; border-radius: 5px; }
+        #carrinho, #pagamento { margin: 30px auto; max-width: 500px; background: white; padding: 20px; border-radius: 10px; }
+        .oculto { display: none; }
+    </style>
 </head>
 <body>
-  <h1>⭐ Star Sites</h1>
+    <header>
+        <h1>Star Sites</h1>
+        <button class="btn" onclick="mostrarProdutos()">Ver Produtos</button>
+    </header>
 
-  <div class="product">
-    <h2>Site</h2>
-    <p>R$ 10,00</p>
-    <button onclick="addToCart('Site', 10)">Adicionar ao carrinho</button>
-  </div>
+    <section id="produtos" class="oculto">
+        <div class="produto">
+            <img src="https://via.placeholder.com/300x200.png?text=Produto+1" alt="Site">
+            <h3>Site</h3>
+            <p>R$ 10,00</p>
+            <button class="btn" onclick="toggleDescricao(this)">Ver Detalhes</button>
+            <p class="descricao oculto">Um site profissional pronto para seu projeto ou negócio.</p>
+            <button class="btn" onclick="adicionarCarrinho('Site', 10)">Adicionar no Carrinho</button>
+        </div>
+    </section>
 
-  <div class="cart">
-    <h2>🛒 Carrinho</h2>
-    <div id="cart-items"></div>
-    <p><strong>Total:</strong> R$ <span id="total">0</span></p>
+    <section id="carrinho" class="oculto">
+        <h2>Produtos no Carrinho</h2>
+        <ul id="lista-carrinho"></ul>
+        <p>Total: R$ <span id="total">0.00</span></p>
+        <button class="btn" onclick="realizarCompra()">Realizar Compra</button>
+    </section>
 
-    <h3> Digite essas informações: </h3></h3>
-    <input type="text" id="nome" placeholder="Nome" required />
-    <input type="text" id="Número" placeholder="Número de Telefone" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <textarea id="obs" placeholder="Observações (opcional)"></textarea>
+    <section id="pagamento"></section>
 
-    <button onclick="finalizarCompra()">Finalizar Compra</button>
-  </div>
+    <script>
+        const carrinho = [];
 
-  <div id="pixSection">
-    <h3>Pagamento via PIX</h3>
-    <p>Use a chave abaixo para realizar o pagamento:</p>
-    <p id="pixKey">92907f20-f786-4997-bc3f-e62c3bd2503d</p>
-    <p>Após o pagamento, você receberá um e-mail com a confirmação, logo em seguida você terá que enviar o comprovante para o nosso número do whatsapp.</p>
-    <a href="https://wa.me/5547996400867?text=Olá!%20Acabei%20de%20realizar%20uma%20compra%20na%20Star%20Sites.%20Segue%20comprovante." target="_blank">
-      <button style="background: #25d366; margin-top: 10px;">Enviar comprovante no WhatsApp</button>
-    </a>
-  </div>
+        const pagamentosPIX = {
+            "Site": {
+                valor: 10,
+                codigoPix: "00020126580014BR.GOV.BCB.PIX013692907f20-f786-4997-bc3f-e62c3bd2503d520400005303986540510.005802BR5924Matheus Henrique Lima da6009SAO PAULO62140510gKM8FmdVTT63043E72",
+                link: "https://pix.qr-code-generator.com/00020126580014BR.GOV.BCB.PIX013692907f20-f786-4997-bc3f-e62c3bd2503d520400005303986540510.005802BR5924Matheus%20Henrique%20Lima%20da6009SAO%20PAULO62140510gKM8FmdVTT63043E72"
+            }
+        };
 
-  <script>
-    let cart = [];
-    function addToCart(produto, valor) {
-      cart.push({ produto, valor });
-      atualizarCarrinho();
-    }
+        function mostrarProdutos() {
+            document.getElementById('produtos').classList.remove('oculto');
+        }
 
-    function atualizarCarrinho() {
-      const cartItems = document.getElementById("cart-items");
-      const totalSpan = document.getElementById("total");
-      cartItems.innerHTML = "";
-      let total = 0;
-      cart.forEach(item => {
-        cartItems.innerHTML += `<p>${item.produto} - R$ ${item.valor.toFixed(2)}</p>`;
-        total += item.valor;
-      });
-      totalSpan.textContent = total.toFixed(2);
-    }
+        function toggleDescricao(botao) {
+            const desc = botao.nextElementSibling;
+            desc.classList.toggle('oculto');
+        }
 
-    function finalizarCompra() {
-      const nome = document.getElementById("nome").value;
-      const email = document.getElementById("email").value;
-      if (!nome || !email) {
-        alert("Preencha seu nome e e-mail.");
-        return;
-      }
-      document.getElementById("pixSection").style.display = "block";
+        function adicionarCarrinho(produto, valor) {
+            carrinho.push({ nome: produto, valor: valor });
+            atualizarCarrinho();
+        }
 
-      // Enviar e-mail simulado (substitua por back-end real se quiser)
-      console.log("Enviar e-mail para:", email);
-    }
-  </script>
+        function atualizarCarrinho() {
+            const lista = document.getElementById('lista-carrinho');
+            lista.innerHTML = '';
+            let total = 0;
+            carrinho.forEach(item => {
+                lista.innerHTML += `<li>${item.nome} - R$ ${item.valor.toFixed(2)}</li>`;
+                total += item.valor;
+            });
+            document.getElementById('total').innerText = total.toFixed(2);
+            document.getElementById('carrinho').classList.remove('oculto');
+        }
+
+        function realizarCompra() {
+            if (carrinho.length === 0) return alert('Seu carrinho está vazio.');
+            const produto = carrinho[0].nome;
+            const pagamento = pagamentosPIX[produto];
+            if (pagamento) {
+                const container = document.getElementById('pagamento');
+                container.innerHTML = `
+                    <h3>Pagamento PIX</h3>
+                    <p>Valor: R$ ${pagamento.valor.toFixed(2)}</p>
+                    <img src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(pagamento.codigoPix)}" alt="QR Code PIX">
+                    <p><a href="${pagamento.link}" target="_blank">Link do Pagamento</a></p>
+                    <a href="https://wa.me/5547996400867?text=Olá,%20acabei%20de%20realizar%20o%20pagamento%20do%20produto%20${encodeURIComponent(produto)}.%20Segue%20o%20comprovante:" target="_blank">
+                        <button class="btn">Enviar Comprovante</button>
+                    </a>
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
