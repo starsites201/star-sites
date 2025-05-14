@@ -1,58 +1,82 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Guia Termux - por Matheus</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StarSites Store</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #121212; color: #fff; }
-    header { background: #1f1f1f; padding: 20px; text-align: center; }
-    nav a { margin: 0 10px; color: #0af; text-decoration: none; }
-    main { padding: 20px; }
-    section { margin-bottom: 30px; }
-    footer { background: #1f1f1f; text-align: center; padding: 10px; font-size: 14px; }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f9f9f9; }
+    h1 { color: #333; }
+    .product, .cart, #pixSection { background: #fff; padding: 15px; margin: 15px 0; border: 1px solid #ccc; }
+    button { padding: 10px 15px; background: #28a745; color: #fff; border: none; cursor: pointer; }
+    input, textarea { width: 100%; margin-top: 10px; padding: 8px; }
+    #pixSection { display: none; background: #e0ffe0; border: 1px dashed green; }
+    #pixKey { font-weight: bold; color: green; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Guia do Termux</h1>
-    <p>Por Matheus</p>
-    <nav>
-      <a href="#inicio">Início</a>
-      <a href="#comandos">Comandos Úteis</a>
-      <a href="#tutoriais">Tutoriais</a>
-      <a href="#sobre">Sobre</a>
-    </nav>
-  </header>
-  <main>
-    <section id="inicio">
-      <h2>O que é o Termux?</h2>
-      <p>Termux é um poderoso terminal para Android que permite rodar comandos Linux, programar e até criar servidores direto do celular.</p>
-    </section>
+  <h1>StarSites Store</h1>
 
-    <section id="comandos">
-      <h2>Comandos Úteis</h2>
-      <ul>
-        <li><code>pkg update && pkg upgrade</code> - Atualiza os pacotes</li>
-        <li><code>pkg install git</code> - Instala o Git</li>
-        <li><code>pkg install python</code> - Instala o Python</li>
-        <li><code>ls</code> - Lista arquivos no diretório</li>
-      </ul>
-    </section>
+  <div class="product">
+    <h2>Site</h2>
+    <p>R$ 10,00</p>
+    <button onclick="addToCart('Site', 10)">Adicionar ao carrinho</button>
+  </div>
 
-    <section id="tutoriais">
-      <h2>Tutoriais Básicos</h2>
-      <p>1. Como instalar o Termux na Play Store ou F-Droid.</p>
-      <p>2. Como clonar um repositório do GitHub: <code>git clone [link]</code></p>
-      <p>3. Como rodar scripts em Python: <code>python script.py</code></p>
-    </section>
+  <div class="cart">
+    <h2>Carrinho</h2>
+    <div id="cart-items"></div>
+    <p><strong>Total:</strong> R$ <span id="total">0</span></p>
 
-    <section id="sobre">
-      <h2>Sobre o Autor</h2>
-      <p>Me chamo Matheus e criei este site para ajudar iniciantes no mundo do Termux. Gosto de tecnologia, programação e compartilhar conhecimento!</p>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Matheus - Todos os direitos reservados.</p>
-  </footer>
+    <h3>Seus Dados</h3>
+    <input type="text" id="nome" placeholder="Nome completo" required />
+    <input type="email" id="email" placeholder="Seu e-mail" required />
+    <textarea id="obs" placeholder="Observações (opcional)"></textarea>
+
+    <button onclick="finalizarCompra()">Finalizar Compra</button>
+  </div>
+
+  <div id="pixSection">
+    <h3>Pagamento via PIX</h3>
+    <p>Use a chave abaixo para realizar o pagamento:</p>
+    <p id="pixKey">2x5JfVgr9s5nDO0Rr74DqIUppg9_3uGb6Wdk37XGyMfEoWuKo</p>
+    <p>Após o pagamento, você receberá um e-mail com a confirmação.</p>
+    <a href="https://wa.me/55SEUNUMERO?text=Olá!%20Acabei%20de%20realizar%20uma%20compra%20na%20StarSites.%20Segue%20comprovante." target="_blank">
+      <button style="background: #25d366; margin-top: 10px;">Enviar comprovante no WhatsApp</button>
+    </a>
+  </div>
+
+  <script>
+    let cart = [];
+    function addToCart(produto, valor) {
+      cart.push({ produto, valor });
+      atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+      const cartItems = document.getElementById("cart-items");
+      const totalSpan = document.getElementById("total");
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach(item => {
+        cartItems.innerHTML += `<p>${item.produto} - R$ ${item.valor.toFixed(2)}</p>`;
+        total += item.valor;
+      });
+      totalSpan.textContent = total.toFixed(2);
+    }
+
+    function finalizarCompra() {
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      if (!nome || !email) {
+        alert("Preencha seu nome e e-mail.");
+        return;
+      }
+      document.getElementById("pixSection").style.display = "block";
+
+      // Enviar e-mail simulado (substitua por back-end real se quiser)
+      console.log("Enviar e-mail para:", email);
+    }
+  </script>
 </body>
 </html>
